@@ -3,6 +3,7 @@ package ru.netology.manager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.netology.domain.Flight;
+import ru.netology.domain.FlightByTravelTimeAscComparator;
 import ru.netology.repository.FlightRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,7 +33,7 @@ class FlightManagerTest {
     }
 
     @Test
-    void shouldSearchMultipleFlights() {
+    void shouldSearchMultipleFlightsSortedByPrice() {
         String from = "GOJ";
         String to = "RHO";
 
@@ -43,7 +44,7 @@ class FlightManagerTest {
     }
 
     @Test
-    void shouldSearchOneFlight() {
+    void shouldSearchOneFlightSortedByPrice() {
         String from = "GOJ";
         String to = "FCO";
 
@@ -54,12 +55,24 @@ class FlightManagerTest {
     }
 
     @Test
-    void shouldNotSearchFlight() {
+    void shouldNotSearchFlightSortedByPrice() {
         String from = "GOJ";
         String to = "SVO";
 
         Flight[] actual = manager.searchFlight(from, to);
         Flight[] expected = new Flight[]{};
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSearchMultipleFlightsSortedByTravelTime() {
+        String from = "GOJ";
+        String to = "RHO";
+        FlightByTravelTimeAscComparator timeComparator = new FlightByTravelTimeAscComparator();
+
+        Flight[] actual = manager.searchFlight(from, to, timeComparator);
+        Flight[] expected = new Flight[]{RHO1, RHO2, RHO4, RHO3, RHO5};
 
         assertArrayEquals(expected, actual);
     }

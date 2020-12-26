@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Comparator;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Flight implements Comparable {
+public class Flight implements Comparable<Flight> {
     private int id;
     private int cost;
     private String from;
@@ -15,8 +17,7 @@ public class Flight implements Comparable {
     private int travelTime;
 
     @Override
-    public int compareTo(Object o) {
-        Flight flight = (Flight) o;
-        return cost - flight.cost;
+    public int compareTo(Flight o) {
+        return cost - o.cost;
     }
 }
